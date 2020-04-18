@@ -1,0 +1,3 @@
+# CoronaTracker
+This project is made using Django and Some javascript libraries (chart js) and bootstrap at the frontend...
+
