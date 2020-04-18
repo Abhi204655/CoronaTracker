@@ -8,7 +8,8 @@ import json
 def home(request):
     url = "https://covid19.mathdro.id/api/daily"
     try:
-        response = requests.get(url).json()
+        # response = requests.get(url).json()
+        response = requests.get("https://covid19.mathdro.id/api/daily").json()
     except Exception:
         return HttpResponse("Some error occured!!")
 
@@ -52,12 +53,15 @@ def home(request):
 def countryData(request):
     if request.method == 'POST':
         country = request.POST['dropdown']
+        print(country)
         if(country == 'Nothing'):
             return redirect('/')
         else:
-            url = 'https://covid19.mathdro.id/api/countries/' + country
+            # url = 'https://covid19.mathdro.id/api/countries/' + country
             try:
-                response = requests.get(url).json()
+                # response = requests.get(url).json()
+                response = requests.get(
+                    'https://covid19.mathdro.id/api/countries/' + country).json()
             except Exception:
                 return HttpResponse("Some error occured!!")
 
@@ -70,13 +74,21 @@ def countryData(request):
             countries = []
             values = countryResponse["countries"]
             for i in values:
-                countries.append(i["name"])
+                countries.append(str(i["name"]))
 
             context = {
-                "confirmedCases": response['confirmed']['value'],
-                "recoveredCases": response['recovered']['value'],
-                "deathCount": response['deaths']['value'],
-                "lastUpdate": response['lastUpdate'][:10],
+                # "confirmedCases": response['confirmed']['value'],
+                "confirmedCases": response.get('confirmed').get('value'),
+
+                # "recoveredCases": response['recovered']['value'],
+                "recoveredCases": response.get('recovered').get('value'),
+
+                # "deathCount": response['deaths']['value'],
+                "deathCount": response.get('deaths').get('value'),
+
+                # "lastUpdate": response['lastUpdate'][:10],
+                "lastUpdate": response.get('lastUpdate')[:10],
+
                 "countries": countries,
                 "bar": True,
                 "countryName": country

@@ -48,13 +48,13 @@
         <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Select the country:</label>
         <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref" name="dropdown">
             {% if countryName %}
-            <option selected value={{countryName}}>{{countryName}}</option>
+            <option selected value="{{countryName}}">{{countryName}}</option>
             {% else %}
             <option selected value="Nothing">Global</option>
             {% endif %}
 
             {% for country in countries %}
-            <option value={{country}}>{{country}}</option>
+            <option value="{{country}}">{{country}}</option>
             {% endfor %}
         </select>
         <button type="submit" class="btn btn-primary my-1">Submit</button>
